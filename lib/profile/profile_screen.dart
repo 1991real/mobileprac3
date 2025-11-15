@@ -26,13 +26,27 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () => bloc.add(PickNewAvatar()),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 300),
+                      switchInCurve: Curves.easeIn,
+                      switchOutCurve: Curves.easeOut,
                       child: CircleAvatar(
-                        key: ValueKey(state.avatarPath),
+                        key: ValueKey(state.avatarPath ?? 'default'),
                         radius: 70,
-                        backgroundImage: state.avatarPath == null
-                            ? const AssetImage("assets/default_avatar.png")
-                                as ImageProvider
-                            : FileImage(File(state.avatarPath!)),
+                        backgroundColor: Colors.grey[300],
+                        child: ClipOval(
+                          child: state.avatarPath != null
+                              ? Image.file(
+                                  File(state.avatarPath!),
+                                  width: 140,
+                                  height: 140,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  "assets/default_avatar.png",
+                                  width: 140,
+                                  height: 140,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
                     ),
                   ),
@@ -46,13 +60,10 @@ class ProfileScreen extends StatelessWidget {
                       child: const Text("Удалить фото"),
                     ),
                   const SizedBox(height: 20),
-
-                  // Дополнительные данные профиля
                   const Text(
                     "Александр",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-
                   const SizedBox(height: 10),
                   Text(
                     state.avatarPath == null
@@ -60,11 +71,8 @@ class ProfileScreen extends StatelessWidget {
                         : "Аватар установлен",
                     style: const TextStyle(fontSize: 16),
                   ),
-
                   const Spacer(),
-
-                  if (state.isLoading)
-                    const CircularProgressIndicator(),
+                  if (state.isLoading) const CircularProgressIndicator(),
                 ],
               ),
             );

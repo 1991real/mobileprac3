@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profile/profile_screen.dart';   // <-- update path if needed
+import 'profile/profile_screen.dart';  
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ProfileScreen(),   // <-- This is your screen!
+      home: const ProfileScreen(),
     );
   }
 }
